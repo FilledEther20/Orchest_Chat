@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: backend-deployment
+  namespace: chat-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+      metadata:
+        name: backend-pod
+        namespace: chat-app
+        labels:
+          app: backend
+      spec:
+        containers:
+        - name: chatapp-backend
+          image: etheral829/chat-backend
+          ports:
+          - containerPort: 5001
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          env:
+          - name: NODE_ENV
+            value: production  
